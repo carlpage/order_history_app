@@ -1,0 +1,11 @@
+.orderContainer {
+  display: block;
+}
+
+#orderNum {
+  float: left;
+}
+
+#address {
+  float: right;
+}

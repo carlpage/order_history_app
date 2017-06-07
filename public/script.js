@@ -10,8 +10,22 @@ $(document).ready(function() {
       type: 'GET',
       url: '/orders/' + getId,
       success: function(response) {
+        $('#info').empty();
         console.log(response);
-
+        for (var i = 0; i < response.length; i++) {
+          var product = (response[i].unit_price * response[i].quantity);
+          if ($('#order' + response[i].id).length) {
+            $('#order' + response[i].id + ' > ul').append('<li data-lineItemTotal="' + product + '">' + response[i].description + ' ' + response[i].unit_price + ' ' + response[i].quantity + '</li>');
+          } else {
+            var $div = $('<div>');
+            $div.attr('id', ("order" + response[i].id));
+            $div.addClass('orderContainer');
+            $div.append("<p id='orderNum'> Order Number: " + response[i].id + "</p>");
+            $div.append("<p id='address'> Address: " + response[i].street + "</p>");
+            $div.append("<p id='lineItems'> Line Items: " + '</p><ul><li data-lineItemTotal="' + product + '">' + response[i].description + ' ' + response[i].unit_price + ' ' + response[i].quantity + "</li></ul>");
+            $('#info').append($div);
+          }
+        }
       } //end success
     }); //end Ajax
   });
@@ -36,6 +50,4 @@ $(document).ready(function() {
     }); //end ajax
   }
 
-
-
-});
+}); // end document ready
